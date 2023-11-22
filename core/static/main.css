@@ -1,0 +1,16 @@
+/* a {
+    background-color: black;
+    color: #ffffff;
+    padding: 3px;
+    text-decoration: none;
+    margin: 1px;
+    border: 1px solid blue;
+} */
+
+/* div {
+    color: rgb(0, 150, 30)
+} */
+a, a:hover {
+    color: #333;
+    text-decoration: none;
+}

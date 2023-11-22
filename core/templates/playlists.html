@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  <h2>Ваши плейлисты</h2>
+  <ul class="list-group">
+    {% for playlist in objects_list %}
+      <li class="list-group-item">
+        <a href="{% url 'playlist_info' id=playlist.id %}">{{ playlist.name }}</a>
+        (Владелец: {{ playlist.owner.username }})
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

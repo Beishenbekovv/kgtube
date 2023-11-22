@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>{{ playlist_object.name }}</h2>
+  <p>Описание: {{ playlist_object.description }}</p>
+  <p>Количество видео: {{ playlist_object.videos_qty }}</p>
+  <p>Количество просмотров: {{ playlist_object.views_qty }}</p>
+  <p>Опубликовано: {% if playlist_object.is_published %}Да{% else %}Нет{% endif %}</p>
+  <p>Владелец: {{ playlist_object.owner.username }}</p>
+{% endblock %}

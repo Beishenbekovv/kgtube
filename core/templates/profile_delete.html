@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+    <h2>Удалить профиль пользователя {{ profile_object.user.username }}?</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <button class="btn btn-danger">Да</button>
+        <a class="btn btn-warning" href="{% url 'profile-detail' profile_object.id %}">Нет</a>
+    </form>
+
+{% endblock %}

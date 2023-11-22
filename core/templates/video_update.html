@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form method="POST">
+        {% csrf_token %}
+        <p>
+            <input class="form-control" type="text" value="{{ video.name }}" name="video_name">
+        </p>
+        <button class="btn btn-primary">Обновить</button>
+    </form>
+{% endblock %}

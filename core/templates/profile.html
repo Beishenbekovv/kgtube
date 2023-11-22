@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div>
+        <img src="{{ profile_object.photo.url }}" alt="" height="250px">
+        <h3>Подписчиков: {{ subscribers_qty }}</h3>
+        <h3>Название канала: {{ profile_object.channel_name }}</h3>
+    </div>
+    {% if request.user == profile_object.user %}
+        <a class="btn btn-warning" href="{% url 'profile-update' profile_object.id %}">Изменить</a>
+        <a class="btn btn-danger" href="{% url 'profile-delete' profile_object.id %}">Удалить</a>
+    {% endif %}
+    <h3>Видео этого канала:</h3>
+    <div class="row">
+        {% for video in videos_list %}
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <a href="/video/{{ video.id }}/">
+                    <video width="95%">
+                        <source src="{{ video.file_path.url }}">
+                    </video>
+                    <h3>{{ video.name }}</h3>
+                    <span><img height="20px" src="{% static 'like.svg' %}" alt=""> {{ video.likes }}</span> 
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

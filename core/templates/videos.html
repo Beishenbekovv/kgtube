@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="row">
+        {% for video in videos_list  %}
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <a href="/video/{{ video.id }}/">
+                    <video width="95%">
+                        <source src="{{ video.file_path.url }}">
+                    </video>
+                    <h3>{{ video.name }}</h3>
+                    {% if video.author %}
+                        <h4>
+                            <a href="/profile/{{ video.author.profile.id }}/">
+                                {{ video.author.username }}
+                            </a>
+                        </h4>
+                    {% endif %}
+                    <span><img height="20px" src="{% static 'like.svg' %}" alt=""> {{ video.likes }}</span> 
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
