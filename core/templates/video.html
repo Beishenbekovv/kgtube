@@ -1,18 +1,18 @@
 {% extends 'base.html' %}
-{% load static %} 
+{% load static %}
 {% load django_bootstrap5 %}
 
 {% block content %}
     <h1>{{ video.name }}</h1>
-    {% if video.author and video.author.profile %}
+    {% if video.author %}
         <h2>Автор:
             <a href="{% url 'profile-detail' video.author.profile.id %}">
                 {{ video.author.username }}
             </a>
         </h2>
     {% endif %}
-    <h3>Лайков: {{ video.likes }}</h3>
-    <h3>Просмотры: {{ video.videoview_set.count }}</h3>
+    <h3>Лайков: {{ video.likes }}</h2>
+    <h3>Просмотры: {{ video.videoview_set.count }}</h2>
     <h3>Просмотрено пользователями:</h3>
     {% for view in video.videoview_set.all %}
         <div> 
@@ -21,15 +21,39 @@
     {% endfor %}
     <hr>
     <p>
-        <video width="500" controls src="{{ video.file_path.url }}"></video>
+        <video width="500" controls src="{{ video.file_path.url }}">
+        </video>
     </p>
-    <a href="{% url 'video-update' video.id %}" class="btn btn-warning">Изменить</a>
-    <a href="{% url 'video-delete' video.id %}" class="btn btn-danger">Удалить</a>
+    <!-- Только для автора -->
+    {% if request.user == video.author %}
+        <a href="{% url 'video-update' video.id %}" class="btn btn-warning">Изменить</a>
+        <a href="{% url 'video-delete' video.id %}" class="btn btn-danger">Удалить</a>
+    {% endif %}
+
+    <!-- Только для авторизованного -->
+    {% if request.user.is_authenticated %}
+        <div class="likes-block">
+            <form method="POST">
+                {% csrf_token %}
+                <button name="like">
+                    <span>
+                        <img height="20px" src="{% static 'like.svg' %}" alt="">
+                        {{ video.likes }}
+                    </span>
+                </button>
+            </form>
+            <form method="POST">
+                {% csrf_token %}
+                <button name="dislike">
+                    <span>
+                        <img height="20px" src="{% static 'dislike.svg' %}" alt="">
+                    </span>
+                </button>
+            </form>
+        </div>
+    {% endif %}
+
     <hr>
-    <form method="post" action="{% url 'like_video' video.id %}">
-        {% csrf_token %}
-        <button><span><img height="20px" src="{% static 'like.svg' %}" alt="">{{ video.likes }}</span></button>
-    </form>
     <h2>Комментарии</h2>
     {% if request.user.is_authenticated %}
         <p>

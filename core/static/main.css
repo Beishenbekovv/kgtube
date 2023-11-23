@@ -14,3 +14,14 @@ a, a:hover {
     color: #333;
     text-decoration: none;
 }
+
+.likes-block {
+    margin-top: 5px;
+    display: flex;
+    gap: 3px;
+}
+
+.likes-block button {
+    border: none;
+    background-color: white;
+}
