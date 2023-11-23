@@ -97,3 +97,17 @@ def profile_delete(request, id):
         return render(request, "profile_delete.html", context)
     else:
         return HttpResponse("Нет доступа")
+
+def subscriber_add(request,id):
+    if request.method == "POST":
+        profile_object = Profile.objects.get(id=id)
+        profile_object.subscribers.add(request.user)
+        profile_object.save()
+        return redirect(profile_detail, id=profile_object.id)
+
+def subscriber_remove(request,id):
+    if request.method == "POST":
+        profile_object = Profile.objects.get(id=id)
+        profile_object.subscribers.remove(request.user)
+        profile_object.save()
+        return redirect(profile_detail, id=profile_object.id)

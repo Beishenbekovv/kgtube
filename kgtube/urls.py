@@ -29,7 +29,7 @@ urlpatterns = [
     path('about/', about_view),
     path('playlists/', playlists),
     # path('playlists/', views.playlists),
-    path('playlist/<int:id>/', playlist_info, name='playlist_info'),
+    path('playlist/<int:id>/', playlist_info, name='playlist-info'),
     path('playlist/add/', playlist_add, name='playlist-add'),
     path('playlist-df/add/', playlist_df_add, name='playlist-df-add'),
     path('videos/', videos),
@@ -42,8 +42,8 @@ urlpatterns = [
     path('profile/<int:id>/', profile_detail, name='profile-detail'),
     path('profile-update/<int:id>/', profile_update, name='profile-update'),
     path('profile-delete/<int:id>/', profile_delete, name='profile-delete'),
-    path('like_video/<int:video_id>/', like_video, name='like_video'),
-    path('<int:id>/', video, name='video'),
+    path('subscriber-add/<int:id>/', subscriber_add, name='subscriber-add'),
+    path('subscriber-remove/<int:id>/', subscriber_remove, name='subscriber-remove'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

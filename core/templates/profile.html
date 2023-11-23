@@ -10,6 +10,20 @@
     {% if request.user == profile_object.user %}
         <a class="btn btn-warning" href="{% url 'profile-update' profile_object.id %}">Изменить</a>
         <a class="btn btn-danger" href="{% url 'profile-delete' profile_object.id %}">Удалить</a>
+    {% else %}
+        <div>
+            {% if request.user in profile_object.subscribers.all %}
+                <form action="{% url 'subscriber-remove' profile_object.id %}" method="POST">
+                    {% csrf_token %}
+                    <button class="btn btn-danger">Отписаться</button>
+                </form>
+            {% else %}
+                <form action="{% url 'subscriber-add' profile_object.id %}" method="POST">
+                    {% csrf_token %}
+                    <button class="btn btn-info">Подписаться</button>
+                </form>
+            {% endif %}
+        </div>
     {% endif %}
     <h3>Видео этого канала:</h3>
     <div class="row">

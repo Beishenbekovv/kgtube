@@ -10,6 +10,7 @@ def videos(request):
     return render(request, 'videos.html', context)
 
 def video(request, id):
+    
     # 7
     # SELECT * FROM video_video WHERE id = 7;
     video_object = Video.objects.get(id=id)
@@ -81,3 +82,5 @@ def like_video(request, video_id):
 
 
     return redirect('video', id=video.id)
+
+
