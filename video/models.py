@@ -7,6 +7,7 @@ class Video(models.Model):
     file_path = models.FileField(upload_to="video/") # путь к видео файлу
     name = models.CharField(max_length=60) # varchar
     likes = models.IntegerField(default=0) # int
+    dislikes = models.ManyToManyField(User, related_name='disliked_videos')
     description = models.TextField(null=True) # text # blank = False
     is_published = models.BooleanField(default=True) # boolean
     playlist = models.ForeignKey(

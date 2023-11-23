@@ -34,9 +34,8 @@ def video(request, id):
                 video_object.likes += 1
                 video_object.save()
             elif "dislike" in request.POST:
-                video_object.likes -= 1
-                video_object.save()  
-            # return redirect(video, id=video_object.id)
+                video_object.dislikes.add(request.user)
+                messages.success(request, 'Вы поставили дизлайк.')
     context = {
         "video": video_object,
         "comment_form": CommentForm()
