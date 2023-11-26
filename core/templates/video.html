@@ -47,6 +47,7 @@
                 <button name="dislike">
                     <span>
                         <img height="20px" src="{% static 'dislike.svg' %}" alt="">
+                          {{ video.videoview_set.count }}
                     </span>
                 </button>
             </form>

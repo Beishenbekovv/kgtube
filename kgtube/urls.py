@@ -23,6 +23,8 @@ from video.views import *
 from django.conf import settings
 from django.conf.urls.static import static
 
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', homepage),
@@ -44,6 +46,9 @@ urlpatterns = [
     path('profile-delete/<int:id>/', profile_delete, name='profile-delete'),
     path('subscriber-add/<int:id>/', subscriber_add, name='subscriber-add'),
     path('subscriber-remove/<int:id>/', subscriber_remove, name='subscriber-remove'),
+    path('registration/', registration, name="registration"),
+    path('sign-in/', sign_in, name="sign-in"),
+    path('sign-out/', sign_out, name="sign-out"),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
