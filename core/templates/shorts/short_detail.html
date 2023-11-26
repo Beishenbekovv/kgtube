@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  <h2>{{ short.title }}</h2>
+  <p>{{ short.description }}</p>
+  <a class="btn btn-warning" href="{% url 'short_update' pk=short.pk %}">Изменить</a>
+  <a class="btn btn-danger" href="{% url 'short_delete' pk=short.pk %}">Удалить</a>
+  <a class="btn btn-secondary" href="{% url 'short_list' %}">Назад</a>
+{% endblock %}

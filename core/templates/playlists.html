@@ -6,7 +6,7 @@
   <ul class="list-group">
     {% for playlist in objects_list %}
       <li class="list-group-item">
-        <a href="{% url 'playlist_info' id=playlist.id %}">{{ playlist.name }}</a>
+        <a href="{% url 'playlist-info' id=playlist.id %}">{{ playlist.name }}</a>
         (Владелец: {{ playlist.owner.username }})
       </li>
     {% endfor %}

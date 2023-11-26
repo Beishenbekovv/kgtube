@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  <h2>Shorts</h2>
+  <ul class="list-group">
+    {% for short in shorts %}
+      <li class="list-group-item"><a href="{% url 'short_detail' pk=short.pk %}">{{ short.title }}</a></li>
+    {% endfor %}
+  </ul>
+  <a class="btn btn-primary mt-3" href="{% url 'short_create' %}">Создать новый shorts</a>
+{% endblock %}
