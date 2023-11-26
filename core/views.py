@@ -7,6 +7,7 @@ from video.models import Video
 from .models import Profile
 from .forms import *
 
+
 def registration(request):
     context = {}
     if request.method == "POST":

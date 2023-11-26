@@ -1,9 +1,8 @@
-
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
 
 {% block content %}
-  <h2>{% if short %}Edit{% else %}Создать{% endif %} Short</h2>
+  <h2>{% if short %}Изменить{% else %}Создать{% endif %} Short</h2>
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
