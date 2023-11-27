@@ -9,6 +9,10 @@ from .forms import *
 
 
 def registration(request):
+    if request.user.is_authenticated:
+        return redirect("home")
+    
+
     context = {}
     if request.method == "POST":
         registration_form = UserCreateForm(request.POST)
@@ -23,6 +27,10 @@ def registration(request):
 
 
 def sign_in(request):
+    if request.user.is_authenticated:
+        return redirect("home")
+    
+
     if request.method == "POST":
         auth_form = UserAuthForm(request.POST)
         if auth_form.is_valid():
@@ -49,7 +57,7 @@ def sign_in(request):
 
 def sign_out(request):
     logout(request)
-    return redirect(homepage)
+    return redirect("home")
 
 # Create your views here.
 def homepage(request):
@@ -147,7 +155,7 @@ def profile_delete(request, id):
 
         if request.method == "POST":
             profile_object.delete()
-            return redirect(homepage)
+            return redirect("home")
         return render(request, "profile_delete.html", context)
     else:
         return HttpResponse("Нет доступа")

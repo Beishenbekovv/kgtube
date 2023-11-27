@@ -28,7 +28,7 @@ from shorts.views import short_list, short_detail, short_create, short_update, s
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', homepage),
+    path('', videos, name="home"),
     path('about/', about_view),
     path('playlists/', playlists),
     # path('playlists/', views.playlists),
