@@ -11,7 +11,6 @@ from .forms import *
 def registration(request):
     if request.user.is_authenticated:
         return redirect("home")
-    
 
     context = {}
     if request.method == "POST":
@@ -20,6 +19,10 @@ def registration(request):
             new_user = registration_form.save(commit=False)
             new_user.set_password(request.POST["password"])
             new_user.save()
+            Profile.objects.create(
+                channel_name=new_user.username,
+                user=new_user
+            )
             messages.success(request, "Вы успешно прошли регистрацию")
 
     context["registration_form"] = UserCreateForm()

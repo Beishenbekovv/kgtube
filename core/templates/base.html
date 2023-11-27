@@ -70,7 +70,20 @@
             <button class="btn btn-dark">Поиск</button>
           </form>
           <div>
-            <img src="{{ request.user.profile.photo.url }}" height="50px" alt="">
+            {% if request.user.profile.photo %}
+                <img src="{{ request.user.profile.photo.url }}" height="40px" alt="">
+            {% else %}
+                <img src="{% static 'logo_default.jpg' %}" height="40px" alt="">
+            {% endif %}
+            <br>
+            <a
+                {% if request.user.profile %}
+                    href="{% url 'profile-detail' request.user.profile.id %}"
+                {% endif %}
+                class="text-white">
+                {{ request.user.username }}
+            </a>
+        </div>
           </div>
         </div>
       </div>
