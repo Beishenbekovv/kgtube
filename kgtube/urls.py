@@ -22,7 +22,7 @@ from playlist.views import *
 from video.views import *
 from django.conf import settings
 from django.conf.urls.static import static
-from shorts.views import short_list, short_detail, short_create, short_update, short_delete
+from shorts.views import *
 
 
 
@@ -38,6 +38,7 @@ urlpatterns = [
     path('videos/', videos),
     path('video/<int:id>/', video),
     path('video-update/<int:id>/', video_update, name='video-update'),
+    path('video-update-cbv/<int:id>/', VideoUpdateView.as_view(), name='video-update-cbv'),
     path('video-delete/<int:id>/', video_delete, name='video-delete'),
     path('video-add/', video_add, name='video-add'),
     path('search/', search, name='search'), # from core.views import search
@@ -45,6 +46,7 @@ urlpatterns = [
     path('profile/<int:id>/', profile_detail, name='profile-detail'),
     path('profile-update/<int:id>/', profile_update, name='profile-update'),
     path('profile-delete/<int:id>/', profile_delete, name='profile-delete'),
+    path('profile-update-cbv/<int:pk>/', ProfileUpdate.as_view(), name='profile-update-cbv'),
     path('subscriber-add/<int:id>/', subscriber_add, name='subscriber-add'),
     path('subscriber-remove/<int:id>/', subscriber_remove, name='subscriber-remove'),
     path('registration/', registration, name="registration"),

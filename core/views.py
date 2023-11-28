@@ -2,6 +2,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.views import View
 from django.db.models import Q
 from video.models import Video
 from .models import Profile
@@ -149,6 +150,37 @@ def profile_update(request, id):
         return render(request, "profile_update.html", context)
     else:
         return HttpResponse("Нет доступа")
+
+
+class ProfileUpdate(View):
+    # read
+    def get(self, request, *args, **kwargs):
+        context = {}
+        profile_object = Profile.objects.get(id=kwargs.get("pk"))
+        profile_form = ProfileForm(instance=profile_object)
+        context["profile_form"] = profile_form
+        return render(request, "profile_update.html", context)
+    
+    # update
+    def post(self, request, *args, **kwargs):
+        profile_object = Profile.objects.get(id=kwargs.get("pk"))
+        if request.user == profile_object.user:
+            profile_form = ProfileForm(
+                instance=profile_object,
+                data=request.POST,
+                files=request.FILES,
+            )
+            if profile_form.is_valid():
+                profile_form.save()
+                messages.success(request, "Профиль успешно обновлён!")
+                return redirect("profile-update-cbv", pk=profile_object.id)
+            else:
+                return HttpResponse("Данные не валидны", status=400)
+        else:
+            return HttpResponse("Нет доступа", status=403)
+
+
+
 
 def profile_delete(request, id):
     context = {}

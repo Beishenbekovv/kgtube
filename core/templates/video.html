@@ -6,7 +6,11 @@
     <h1>{{ video.name }}</h1>
     {% if video.author %}
         <h2>Автор:
-            <a href="{% url 'profile-detail' video.author.profile.id %}">
+            <a href="
+                {% if video.author.profile %}
+                    {% url 'profile-detail' video.author.profile.id %}
+                {% endif %}
+            ">
                 {{ video.author.username }}
             </a>
         </h2>
@@ -47,7 +51,7 @@
                 <button name="dislike">
                     <span>
                         <img height="20px" src="{% static 'dislike.svg' %}" alt="">
-                          {{ video.videoview_set.count }}
+                        {{ video.dislikes.count }}
                     </span>
                 </button>
             </form>
@@ -56,20 +60,18 @@
 
     <hr>
     <h2>Комментарии</h2>
-    {% if request.user.is_authenticated %}
-        <p>
-            <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                {% bootstrap_form comment_form %}
-                {% if comment_form.errors %}
-                    <div class="alert alert-danger">
-                        {{ comment_form.errors }}
-                    </div>
-                {% endif %}
-                <button type="submit" class="btn btn-primary">Добавить комментарий</button>
-            </form>
-        </p>
-    {% endif %}
+    <p>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% bootstrap_form comment_form %}
+            {% if comment_form.errors %}
+                <div class="alert alert-danger">
+                    {{ comment_form.errors }}
+                </div>
+            {% endif %}
+            <button type="submit" class="btn btn-primary">Добавить комментарий</button>
+        </form>
+    </p>
     {% for comment in video.comment_set.all %}
         <div class="card mb-3">
             <div class="card-header">

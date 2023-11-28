@@ -1,18 +1,30 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
+from django.views.generic.edit import UpdateView
+from django.urls import reverse_lazy
+from django.views import View
 from django.contrib import messages
 from .models import *
-from .forms import CommentForm
-
+from .forms import CommentForm, VideoForm
 
 def videos(request):
     videos_list = Video.objects.all()
     context = {"videos_list": videos_list}
-    return render(request, 'videos.html', context)
+    return render(
+        request,
+        'videos.html',
+        context
+    )
 
 def video(request, id):
     # 7
     # SELECT * FROM video_video WHERE id = 7;
-    video_object = Video.objects.get(id=id)
+    if request.method == 'POST':
+        if not request.user.is_authenticated:
+            return HttpResponse('Вы не авторизованы', status=401)
+    try:
+        video_object = Video.objects.get(id=id)
+    except:
+        return HttpResponse("Не найдено", status=404)
     context = {}
     if request.user.is_authenticated:
         video_view, created = VideoView.objects.get_or_create(
@@ -35,7 +47,8 @@ def video(request, id):
                 video_object.save()
             elif "dislike" in request.POST:
                 video_object.dislikes.add(request.user)
-                messages.success(request, 'Вы поставили дизлайк.')
+                messages.success(request, 'Вы поставили дизлайк.')  
+            # return redirect(video, id=video_object.id)
     context = {
         "video": video_object,
         "comment_form": CommentForm()
@@ -71,7 +84,31 @@ def video_update(request, id):
 
     return render(request, 'video_update.html', context)
 
+
+
+class VideoUpdateView(View):
+    template_name = 'video_update.html'
+    
+    def get(self, request, id, *args, **kwargs):
+        video_object = Video.objects.get(id=id)
+        video_form = VideoForm(instance=video_object)
+        context = {"video": video_object, "video_form": video_form}
+        return render(request, self.template_name, context)
+
+
+    def post(self, request, id, *args, **kwargs):
+        video_object = Video.objects.get(id=id)
+        video_form = VideoForm(request.POST, instance=video_object)
+
+        if video_form.is_valid():
+            video_form.save()
+            return redirect('video', id=video_object.id)
+        else:
+            context = {"video": video_object, "video_form": video_form}
+            return render(request, self.template_name, context)
+
 def video_delete(request, id):
     video_object = Video.objects.get(id=id)
     video_object.delete()
     return redirect(videos)
+
