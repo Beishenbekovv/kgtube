@@ -55,3 +55,20 @@ class TestComment(TestCase):
         for i in range(3):
             # print(text_comments[i])
             self.assertContains(response, text_comments[i])
+
+
+def test_add_comment_should_success(self):
+    video_object = VideoFactory
+    user_object = UserFactory
+    self.client.force_login(user_object)
+    self.client.post(
+        path=f'/video/{video_object.id}/',
+        data={"txt": "test create comment"}
+    )
+
+    comments = Comment.objects.filter(
+        video=video_object,
+        txt = "test create comment",
+        user=user_object
+    )
+    self.assertTrue(comments.count() > 0)
