@@ -30,7 +30,7 @@
     </p>
     <!-- Только для автора -->
     {% if request.user == video.author %}
-        <a href="{% url 'video-update' video.id %}" class="btn btn-warning">Изменить</a>
+        <a href="{% url 'video-update-cbv' video.id %}" class="btn btn-warning">Изменить</a>
         <a href="{% url 'video-delete' video.id %}" class="btn btn-danger">Удалить</a>
     {% endif %}
 

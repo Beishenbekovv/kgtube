@@ -38,7 +38,7 @@ urlpatterns = [
     path('videos/', videos),
     path('video/<int:id>/', video),
     path('video-update/<int:id>/', video_update, name='video-update'),
-    path('video-update-cbv/<int:id>/', VideoUpdateView.as_view(), name='video-update-cbv'),
+    path('video-update-cbv/<int:pk>/', VideoUpdate.as_view(), name='video-update-cbv'),
     path('video-delete/<int:id>/', video_delete, name='video-delete'),
     path('video-add/', video_add, name='video-add'),
     path('search/', search, name='search'), # from core.views import search
